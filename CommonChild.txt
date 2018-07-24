@@ -1,0 +1,60 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Solution {
+
+    // Complete the commonChild function below.
+    static int commonChild(string s1, string s2) {
+      int size = s1.Length;
+        int sum=0;
+        int[,] mat = new int[size+1,size+1];
+        for(int row_index=0;row_index<size;row_index++){
+            for(int col_index=0;col_index<size;col_index++){
+                if(s1[row_index]==s2[col_index]){
+                    int val = mat[row_index,col_index];
+                    mat[row_index+1,col_index+1]=val+1;
+                } 
+                else{
+                    int val2 = mat[row_index+1,col_index];
+                    int val4 = mat[row_index,col_index+1];
+                    if(val2>val4){
+                        mat[row_index+1,col_index+1]=val2;
+                    }
+                    else{
+                        mat[row_index+1,col_index+1]=val4;
+                    }
+                }
+                if(sum<mat[row_index+1,col_index+1]){
+                    sum=mat[row_index+1,col_index+1];
+                }
+            }
+        }
+        return sum;
+    }
+
+    static void Main(string[] args) {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        string s1 = Console.ReadLine();
+
+        string s2 = Console.ReadLine();
+
+        int result = commonChild(s1, s2);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
