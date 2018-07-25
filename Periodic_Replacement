@@ -1,0 +1,45 @@
+int MinChanges(int maxPeriod, string[] acgt)
+        {
+            string arr = string.Join("", acgt);
+            int length = arr.Length;
+            char[] array = arr.ToCharArray();
+            if (maxPeriod >= length)
+            {
+                return 0;
+            }
+            int replacements = 0;
+            int flag = 0;
+            int individualReplacement = 0;
+            //Your code goes here
+            for(int i = 1; i <= maxPeriod; i++)
+            {
+                char[] array2 = new char[length];
+                array.CopyTo(array2, 0);
+                individualReplacement = 0;
+                int j = 0;
+                while (j < length && (j+i<length))
+                {
+                    if (array2[j] != array2[j + i])
+                    {
+                        array2[j + i] = array2[j];
+                        //Console.WriteLine("index {0} copied to {1}", j, j + i);
+                        individualReplacement++;
+                    }
+                    j++;
+                }
+                //Console.WriteLine(individualReplacement);
+                if (flag == 0)
+                {
+                    replacements = individualReplacement;
+                    flag = 1;
+                }
+                else
+                {
+                    if (replacements > individualReplacement)
+                    {
+                        replacements = individualReplacement;
+                    }
+                }
+            }
+            return replacements;
+        }
